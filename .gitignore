@@ -1,0 +1,15 @@
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment secrets
+.env
+
+# Real data - not for GitHub
+data_storage/*.json
+data_storage/uploaded_books/*.txt
+
+# OS-specific junk files
+.DS_Store
