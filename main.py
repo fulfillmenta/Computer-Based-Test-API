@@ -3,8 +3,17 @@ from routes.auth_routes import router as auth_router
 from routes.quiz_routes import router as quiz_router
 from routes.admin_routes import router as admin_router
 from routes.book_routes import router as book_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title='Computer Based Test API', description='This app is built to help users practice for test and exams', version='1.0.0')
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
