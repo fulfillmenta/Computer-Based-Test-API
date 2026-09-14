@@ -13,19 +13,6 @@ from middleware.auth_middleware import require_admin, get_current_user
 router = APIRouter()
 
 
-@router.post("/admin/books")
-async def create_book(
-    title: str = Form(...),
-    author: str = Form(...),
-    category: str = Form(...),
-    file: UploadFile = File(...),
-    current_user: dict = Depends(require_admin),
-):
-    file_bytes = await file.read()
-    file_content = file_bytes.decode("utf-8")
-    return upload_book(title, author, category, file_content)
-
-
 @router.get("/books")
 def list_books(current_user: dict = Depends(get_current_user)):
     return get_all_books()
@@ -39,6 +26,19 @@ def search_for_books(query: str, current_user: dict = Depends(get_current_user))
 @router.get("/books/read")
 def read_book_by_title(title: str, current_user: dict = Depends(get_current_user)):
     return get_book_content_by_title(title)
+
+
+@router.post("/admin/books")
+async def create_book(
+    title: str = Form(...),
+    author: str = Form(...),
+    category: str = Form(...),
+    file: UploadFile = File(...),
+    current_user: dict = Depends(require_admin),
+):
+    file_bytes = await file.read()
+    file_content = file_bytes.decode("utf-8")
+    return upload_book(title, author, category, file_content)
 
 
 @router.get("/admin/books/{book_id}")
